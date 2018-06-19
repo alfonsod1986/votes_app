@@ -7,6 +7,8 @@ const app = express();
 const bodyParser = require('body-parser');
 
 /* Importing Routes */
+const federal_district = require('./routes/federal_district');
+const local_district = require('./routes/local_district');
 const occupation = require('./routes/occupation');
 const voter = require('./routes/voter');
 
@@ -26,6 +28,8 @@ app.use((req, res, next) => {
 });
 
 /* Routes */
+app.use('/api', federal_district);
+app.use('/api', local_district);
 app.use('/api', occupation);
 app.use('/api', voter);
 
