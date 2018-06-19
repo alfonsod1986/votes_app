@@ -1,7 +1,8 @@
 'use strict';
-const Gender = require('./gender');
+
+const FederalDistrict = require('./federal_district');
+const LocalDistrcit = require('./local_district');
 const Occupation = require('./occupation');
-const Neighborhood = require('./neighborhood');
 
 module.exports = (sequelize, Sequelize) => {
     const Voter = sequelize.define('voter', {
@@ -13,6 +14,7 @@ module.exports = (sequelize, Sequelize) => {
         electoral_key:{
             type: Sequelize.STRING(20),
             allowNull: true,
+            defaultValue: null,
             len: [18,20]  
         },
         first_name:{
@@ -26,6 +28,7 @@ module.exports = (sequelize, Sequelize) => {
         second_name:{
             type: Sequelize.STRING(128),
             allowNull: true,
+            defaultValue: null,
             len: [5,128]
         },
         state:{
@@ -33,30 +36,39 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true,
             defaultValue: null
         },
-        on_nominal_list:{
-            type: Sequelize.BOOLEAN
-        },
-        address:{
-            type: Sequelize.STRING(40),
-            allowNull: true,
-            len: [2,40]
-        },
-        external_number:{
-            type: Sequelize.STRING(10),
-            allowNull: true,
-            len: [2,10]
-        },
-        internal_number:{
-            type: Sequelize.STRING(10),
-            allowNull: true,
-            len: [2,10]
-        },
-        gender_id:{
+        federal_district_id:{
             type: Sequelize.INTEGER.UNSIGNED,
             references: {
-                model: Gender,
-                key: 'gender_id'
+                model: FederalDistrict,
+                key: 'federal_district_id'
             }
+        },
+        local_district_id:{
+            type: Sequelize.INTEGER.UNSIGNED,
+            references: {
+                model: LocalDistrcit,
+                key: 'local_district_id'
+            }
+        },
+        city:{
+            type: Sequelize.INTEGER,
+            allowNull: true,
+            defaultValue: null
+        },
+        section_ln_rev:{
+            type: Sequelize.STRING(10),
+            allowNull: true,
+            defaultValue: null,
+            len: [5,10]
+        },
+        section_4d_16:{
+            type: Sequelize.STRING(10),
+            allowNull: true,
+            defaultValue: null,
+            len: [5,10]
+        },
+        on_nominal_list:{
+            type: Sequelize.BOOLEAN
         },
         occupation_id:{
             type: Sequelize.INTEGER.UNSIGNED,
@@ -65,13 +77,59 @@ module.exports = (sequelize, Sequelize) => {
                 key: 'occupation_id'
             }
         },
-        neighborhood_id:{
-            type: Sequelize.INTEGER.UNSIGNED,
-            references: {
-                model: Neighborhood,
-                key: 'neighborhood_id'
-            }
-        }
+        address:{
+            type: Sequelize.STRING(40),
+            allowNull: true,
+            defaultValue: null,
+            len: [2,40]
+        },
+        external_number:{
+            type: Sequelize.STRING(10),
+            allowNull: true,
+            defaultValue: null,
+            len: [2,10]
+        },
+        internal_number:{
+            type: Sequelize.STRING(10),
+            allowNull: true,
+            defaultValue: null,
+            len: [2,10]
+        },
+        neighborhood:{
+            type: Sequelize.STRING(255),
+            allowNull: true,
+            defaultValue: null,
+            len: [2,255]
+        },
+        zipcode:{
+            type: Sequelize.STRING(10),
+            allowNull: true,
+            defaultValue: null,
+            len: [2,10]
+        },
+        residence_time:{
+            type: Sequelize.STRING(10),
+            allowNull: true,
+            defaultValue: null,
+            len: [2,10]
+        },
+        locality:{
+            type: Sequelize.STRING(10),
+            allowNull: true,
+            defaultValue: null,
+            len: [2,10]
+        },
+        apple:{
+            type: Sequelize.STRING(10),
+            allowNull: true,
+            defaultValue: null,
+            len: [2,10]
+        },
+        registration_date:{
+            type: Sequelize.DATE,
+            allowNull: true,
+            defaultValue: null
+        },
     },
     {
         tableName: 'voters',
