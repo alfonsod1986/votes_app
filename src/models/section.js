@@ -1,5 +1,7 @@
 'use strict';
 
+const Zone = require('./zone');
+
 module.exports = (sequelize, Sequelize) => {
     const Section = sequelize.define('section', {
         section_id:{
@@ -10,7 +12,14 @@ module.exports = (sequelize, Sequelize) => {
         description:{
             type: Sequelize.STRING(45),
             len: [1,45]
-        }
+        },
+        zone_id:{
+            type: Sequelize.INTEGER.UNSIGNED,
+            references: {
+                model: Zone,
+                key: 'zone_id'
+            }
+        },
     },
     {
         tableName: 'sections',
