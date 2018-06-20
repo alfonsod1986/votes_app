@@ -7,8 +7,14 @@ const app = express();
 const bodyParser = require('body-parser');
 
 /* Importing Routes */
+const user = require('./routes/user');
 const federal_district = require('./routes/federal_district');
 const local_district = require('./routes/local_district');
+const zone = require('./routes/zone');
+const section = require('./routes/section');
+const section_type = require('./routes/section_type');
+const box_ubication = require('./routes/box_ubication');
+const box = require('./routes/box');
 const occupation = require('./routes/occupation');
 const voter = require('./routes/voter');
 
@@ -28,8 +34,14 @@ app.use((req, res, next) => {
 });
 
 /* Routes */
+app.use('/api', user);
 app.use('/api', federal_district);
 app.use('/api', local_district);
+app.use('/api', zone);
+app.use('/api', section);
+app.use('/api', section_type);
+app.use('/api', box_ubication);
+app.use('/api', box);
 app.use('/api', occupation);
 app.use('/api', voter);
 
