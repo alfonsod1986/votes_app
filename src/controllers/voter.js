@@ -68,8 +68,7 @@ controller.getByInternalId = (req, res) =>{
  * @returns voters
  */
 controller.getByElectoralKey = (req, res) => {
-    const electoral_key  = req.body.electoral_key;
-    console.log(req.body);
+    const {electoral_key}  = req.body;
     Voter.findAll({
         where: { 
             electoral_key: {
