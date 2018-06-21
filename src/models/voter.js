@@ -12,6 +12,9 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
+        internal_id:{
+            type: Sequelize.INTEGER
+        },
         electoral_key:{
             type: Sequelize.STRING(20),
             allowNull: true,
