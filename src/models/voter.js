@@ -97,7 +97,7 @@ module.exports = (sequelize, Sequelize) => {
             defaultValue: null,
             len: [2,10]
         },
-        neighborhood:{
+        neigborhood:{
             type: Sequelize.STRING(255),
             allowNull: true,
             defaultValue: null,
