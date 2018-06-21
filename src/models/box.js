@@ -11,10 +11,6 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
-        code:{
-            type: Sequelize.STRING(10),
-            len: [1,10]
-        },
         section_id:{
             type: Sequelize.INTEGER.UNSIGNED,
             references: {
