@@ -40,6 +40,26 @@ controller.show = (req, res) =>{
 };
 
 /**
+ * Obtener un votante por internal 9d
+ * 
+ * @param req
+ * @param res
+ * 
+ * @returns voter
+ */
+controller.getByInternalId = (req, res) =>{
+    const { internal_id } = req.params;
+
+    Voter.findAll({
+        where:{ voter_id: internal_id}
+    }).then(voter => {
+        res.status(200).send(voter);
+    }).catch((err) =>{
+        res.status(500).send(err);
+    });
+};
+
+/**
  * Obtener un votante por clave electoral
  * 
  * @param req
@@ -51,7 +71,10 @@ controller.getByElectoralKey = (req, res) => {
     const { electoral_key } = req.params;
 
     Voter.findAll({
-        where: { electoral_key: electoral_key }
+        where: { 
+            electoral_key: {
+            [db.Sequelize.like]: `%${electoral_key}%`} 
+        }
     }).then(voters => {
         res.status(200).send(voters);
     }).catch((err) =>{
