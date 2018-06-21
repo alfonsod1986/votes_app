@@ -2,6 +2,7 @@
 
 const FederalDistrict = require('./federal_district');
 const LocalDistrcit = require('./local_district');
+const Box = require('./box');
 const Occupation = require('./occupation');
 
 module.exports = (sequelize, Sequelize) => {
@@ -47,7 +48,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER.UNSIGNED,
             references: {
                 model: LocalDistrcit,
-                key: 'local_district_id'
+                key: 'box_id'
             }
         },
         city:{
@@ -55,11 +56,12 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true,
             defaultValue: null
         },
-        section_ln_rev:{
-            type: Sequelize.STRING(10),
-            allowNull: true,
-            defaultValue: null,
-            len: [5,10]
+        box_id:{
+            type: Sequelize.INTEGER.UNSIGNED,
+            references: {
+                model: Box,
+                key: 'box_id'
+            }
         },
         section_4d_16:{
             type: Sequelize.STRING(10),
@@ -130,6 +132,11 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true,
             defaultValue: null
         },
+        attended:{
+            type: Sequelize.BOOLEAN,
+            allowNull: true,
+            defaultValue: 0
+        }
     },
     {
         tableName: 'voters',
