@@ -1,7 +1,6 @@
 'use strict';
 
 const db = require('../config/db.config');
-const Op = db.Sequelize.Op;
 const Voter = db.voters;
 
 const controller = {};
@@ -74,7 +73,7 @@ controller.getByElectoralKey = (req, res) => {
     Voter.findAll({
         where: { 
             electoral_key: {
-            [db.Sequelize.like]: `'%${electoral_key}%'`} 
+            [db.Sequelize.Op.like]: `%${electoral_key}%`} 
         }
     }).then(voters => {
         res.status(200).send(voters);
