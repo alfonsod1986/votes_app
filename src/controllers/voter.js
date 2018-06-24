@@ -96,6 +96,7 @@ controller.search = (req, res) => {
     console.log(param)
     Voter.findAll({
         where: {
+            on_nominal_list: true,
             [db.Sequelize.or]:[
                 db.Sequelize.where(
                     db.Sequelize.fn(
