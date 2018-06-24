@@ -2,6 +2,7 @@
 
 const env = require('./env');
 const Sequelize = require('sequelize');
+
 const votes_app = new Sequelize(
     env.database,
     env.username,

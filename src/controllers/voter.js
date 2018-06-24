@@ -3,6 +3,7 @@
 const db = require('../config/db.config');
 const Voter = db.voters;
 const Seq = db.Sequelize;
+const Op = Seq.Op;
 
 const controller = {};
 
@@ -73,7 +74,7 @@ controller.getByElectoralKey = (req, res) => {
     Voter.findAll({
         where: { 
             electoral_key: {
-            [Seq.Op.like]: `%${electoral_key}%`} 
+            [Op.or]: `%${electoral_key}%`} 
         }
     }).then(voters => {
         res.status(200).send(voters);
@@ -96,13 +97,13 @@ controller.search = (req, res) => {
     console.log(param)
     Voter.findAll({
         where: {
-            [Seq.or]:[
+            [Op.or]:[
                 Seq.where(Seq.fn('concat', 
                     Seq.col('first_name'), ' ', 
                     Seq.col('last_name'), ' ',
                     Seq.col('second_name')), {
                     like: '%' + param + '%'
-                 }),
+                 })
             ]
         }
     }).then(voters => {
