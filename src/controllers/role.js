@@ -32,7 +32,7 @@ controller.all = (req, res) => {
 controller.show = (req, res) =>{
     const { role_id } = req.params;
 
-    Role.findById(zone_id).then(role =>{
+    Role.findById(role_id).then(role =>{
         res.status(200).send(role);
     }).catch((err) =>{
         res.status(500).send(err);
