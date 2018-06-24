@@ -102,7 +102,7 @@ controller.search = (req, res) => {
                         db.Sequelize.col('first_name'),
                         db.Sequelize.col('last_name'),
                         db.Sequelize.col('second_name'),{
-                            [db.Sequelize.Op.like]: `%${param}%`
+                            like: `%${param}%`
                         })
                 )
             ]
