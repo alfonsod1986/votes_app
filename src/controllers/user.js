@@ -66,6 +66,38 @@ controller.logIn = (req, res) => {
     });
 };
 
+/**
+ * Crear usuario
+ * 
+ * @param req
+ * @param res
+ * 
+ * @returns user
+ */
+controller.save = (req, res) => {
+    var params = req.body;
+    console.log(params);
+    if(params.username && params.password && params.zone_id && params.role_id){
+        var user = {};
+
+        user.username = params.username;
+        user.zone_id = params.zone_id;
+        user.role_id = params.role_id;
+
+        bcrypt.hash(params.password, null, null, (err, hash) => {
+            user.password = hash;
+
+            User.create(user).then(user => {		
+                res.send(user);
+            });
+        });
+    }else{
+        res.status(200).send({
+            message: 'Envía todos los campos requeridos.'
+        });
+    }
+};
+
 controller.test = (req, res) => {
     var params = req.body;
     // Cifrar password y guardar usuario
