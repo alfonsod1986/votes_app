@@ -36,6 +36,7 @@ controller.logIn = (req, res) => {
     var {password} = req.body;
     var {gettoken} = req.body;
 
+    console.log(password)
     User.findOne({
         where: { username: username }
     }).then(user => {
