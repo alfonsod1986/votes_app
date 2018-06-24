@@ -73,7 +73,7 @@ controller.getByElectoralKey = (req, res) => {
     Voter.findAll({
         where: { 
             electoral_key: {
-            [db.Sequelize.Op.like]: `%${electoral_key}%`} 
+            [Seq.Op.like]: `%${electoral_key}%`} 
         }
     }).then(voters => {
         res.status(200).send(voters);
@@ -96,17 +96,13 @@ controller.search = (req, res) => {
     console.log(param)
     Voter.findAll({
         where: {
-            on_nominal_list: true,
-            [db.Sequelize.or]:[
-                db.Sequelize.where(
-                    db.Sequelize.fn(
-                        'concant',
-                        db.Sequelize.col('first_name'),
-                        db.Sequelize.col('last_name'),
-                        db.Sequelize.col('second_name'),{
-                            like: `%${param}%`
-                        })
-                )
+            [Seq.or]:[
+                Seq.where(Seq.fn('concat', 
+                    Seq.col('first_name'), ' ', 
+                    Seq.col('last_name'), ' ',
+                    Seq.col('second_name')), {
+                    like: '%' + param + '%'
+                 }),
             ]
         }
     }).then(voters => {
