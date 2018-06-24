@@ -94,7 +94,7 @@ controller.search = (req, res) => {
     param = param == null? '':param;
     console.log(param)
     Voter.findAll({
-        where: {
+       
             [db.Sequelize.Op.or]:[{
                 first_name:{
                     [db.Sequelize.Op.like]: `%${param}%`
@@ -106,7 +106,7 @@ controller.search = (req, res) => {
                     [db.Sequelize.Op.like]: `%${param}%`
                 }
             }]
-        }
+
     }).then(voters => {
         res.status(200).send(voters);
     }).catch((err) =>{
