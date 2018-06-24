@@ -2,6 +2,7 @@
 
 const db = require('../config/db.config');
 const Voter = db.voters;
+const Seq = db.Sequelize;
 
 const controller = {};
 
@@ -95,9 +96,16 @@ controller.search = (req, res) => {
     console.log(param)
     Voter.findAll({
         where: {
-            first_name:{
-                [db.Sequelize.Op.like]: `%${param}%`
-            }
+            [db.Sequelize.or]:[
+                db.Sequelize.where(
+                    db.Sequelize.fn(
+                        db.Sequelize.col('first_name'),
+                        db.Sequelize.col('last_name'),
+                        db.Sequelize.col('second_name'),{
+                            [db.Sequelize.Op.like]: `%${param}%`
+                        })
+                )
+            ]
         }
     }).then(voters => {
         res.status(200).send(voters);
