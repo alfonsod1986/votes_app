@@ -1,5 +1,8 @@
 'use strict';
 
+const Zone = require('./zone');
+const Role = require('./role');
+
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define('user', {
         user_id:{
@@ -15,6 +18,20 @@ module.exports = (sequelize, Sequelize) => {
         password:{
             type: Sequelize.STRING(70),
             len: [5,20]
+        },
+        zone_id:{
+            type: Sequelize.INTEGER.UNSIGNED,
+            references: {
+                model: Zone,
+                key: 'zone_id'
+            }
+        },
+        role_id:{
+            type: Sequelize.INTEGER.UNSIGNED,
+            references: {
+                model: Zone,
+                key: 'role_id'
+            }
         }
     },
     {
