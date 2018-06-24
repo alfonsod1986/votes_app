@@ -95,17 +95,17 @@ controller.search = (req, res) => {
     console.log(param)
     Voter.findAll({
         where: {
-            where: db.Sequelize.or({
-                first_name:{
-                    like: `%${param}%`
-                },
-                last_name:{
-                    like: `%${param}%`
-                },
-                second_name:{
-                    like: `%${param}%`
-                }
-            })
+            [db.Sequelize.Op.or]:[
+                {first_name:{
+                    [db.Sequelize.Op.like]: `%${param}%`
+                }},
+                {last_name:{
+                    [db.Sequelize.Op.like]: `%${param}%`
+                }},
+                {second_name:{
+                    [db.Sequelize.Op.like]: `%${param}%`
+                }}
+            ]
         }
     }).then(voters => {
         res.status(200).send(voters);
