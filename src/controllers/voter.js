@@ -95,7 +95,7 @@ controller.search = (req, res) => {
     param = param == null? '':param;
     console.log(param)
     Voter.findAll({
-        where: {
+        
             [db.Sequelize.or]:[
                 db.Sequelize.where(
                     db.Sequelize.fn(
@@ -106,7 +106,7 @@ controller.search = (req, res) => {
                         })
                 )
             ]
-        }
+        
     }).then(voters => {
         res.status(200).send(voters);
     }).catch((err) =>{
