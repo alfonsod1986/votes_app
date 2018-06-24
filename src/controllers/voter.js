@@ -2,7 +2,6 @@
 
 const db = require('../config/db.config');
 const Voter = db.voters;
-const Seq = db.Sequelize;
 
 const controller = {};
 
@@ -73,7 +72,7 @@ controller.getByElectoralKey = (req, res) => {
     Voter.findAll({
         where: { 
             electoral_key: {
-            [Seq.Op.or]: `%${electoral_key}%`} 
+            [db.Sequelize.Op.or]: `%${electoral_key}%`} 
         }
     }).then(voters => {
         res.status(200).send(voters);
