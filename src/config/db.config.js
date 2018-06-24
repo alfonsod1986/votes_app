@@ -26,6 +26,7 @@ db.Sequelize = Sequelize;
 db.votes_app = votes_app;
 
 /* Models */
+db.roles = require('../models/role')(votes_app, Sequelize);
 db.users = require('../models/user')(votes_app, Sequelize);
 db.federal_districts = require('../models/federal_district')(votes_app, Sequelize);
 db.local_districts = require('../models/local_district')(votes_app, Sequelize);

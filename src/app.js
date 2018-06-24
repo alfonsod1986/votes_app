@@ -7,6 +7,7 @@ const app = express();
 const bodyParser = require('body-parser');
 
 /* Importing Routes */
+const role = require('./routes/role');
 const user = require('./routes/user');
 const federal_district = require('./routes/federal_district');
 const local_district = require('./routes/local_district');
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
 });
 
 /* Routes */
+app.use('/api', role);
 app.use('/api', user);
 app.use('/api', federal_district);
 app.use('/api', local_district);
