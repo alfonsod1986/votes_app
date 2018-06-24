@@ -82,7 +82,7 @@ controller.getByElectoralKey = (req, res) => {
 };
 
 /**
- * Obtener un votante por clave electoral
+ * Obtener un votante por filtro
  * 
  * @param req
  * @param res
