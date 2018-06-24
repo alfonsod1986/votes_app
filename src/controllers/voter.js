@@ -93,21 +93,12 @@ controller.search = (req, res) => {
     var {param} = req.query;
     param = param == null? '':param;
     console.log(param)
-    Voter.findAll({
-        where: {
-            [db.Sequelize.Op.or]:[
-                {first_name:{
-                    [db.Sequelize.Op.like]: `%${param}%`
-                }},
-                {last_name:{
-                    [db.Sequelize.Op.like]: `%${param}%`
-                }},
-                {second_name:{
-                    [db.Sequelize.Op.like]: `%${param}%`
-                }}
-            ]
-        }
-    }).then(voters => {
+    var stm = `SELECT v.* FROM voters v
+    INNER JOIN boxes b ON v.box_id = b.box_id
+    INNER JOIN sections s ON b.section_id = s.section_id
+    WHERE v.first_name LIKE '%${param}%' OR v.last_name LIKE '%${param}%' OR 
+    v.second_name LIKE '%${param}%';`;
+    db.votes_app.query(stm).then(voters => {
         res.status(200).send(voters);
     }).catch((err) =>{
         res.status(500).send(err);
