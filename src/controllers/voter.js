@@ -72,7 +72,7 @@ controller.getByElectoralKey = (req, res) => {
     Voter.findAll({
         where: { 
             electoral_key: {
-            [db.Sequelize.Op.or]: `%${electoral_key}%`} 
+            [db.Sequelize.Op.like]: `%${electoral_key}%`} 
         }
     }).then(voters => {
         res.status(200).send(voters);
