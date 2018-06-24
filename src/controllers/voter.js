@@ -92,20 +92,12 @@ controller.getByElectoralKey = (req, res) => {
 controller.search = (req, res) => {
     var {param} = req.query;
     param = param == null? '':param;
-
+    console.log(param)
     Voter.findAll({
         where: {
             first_name:{
                 [db.Sequelize.Op.like]: `%${param}%`
-            },
-            [db.Sequelize.or]:[{
-                last_name:{
-                    [db.Sequelize.Op.like]: `%${param}%`
-                },
-                second_name:{
-                    [db.Sequelize.Op.like]: `%${param}%`
-                }
-            }]
+            }
         }
     }).then(voters => {
         res.status(200).send(voters);
