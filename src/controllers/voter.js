@@ -95,13 +95,13 @@ controller.search = (req, res) => {
     console.log(param)
     Voter.findAll({
         where: {
-            on_nominal_list: true,
             [db.Sequelize.Op.or]:[
                 db.Sequelize.where(db.Sequelize.fn('concat', 
                     db.Sequelize.col('first_name'), ' ', 
                     db.Sequelize.col('last_name')), {
                     like: '%' + param + '%'
-                 })
+                 }),
+                 {on_nominal_list: true}
             ]
         }
     }).then(voters => {
