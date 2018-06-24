@@ -96,8 +96,7 @@ controller.search = (req, res) => {
     var stm = `SELECT v.* FROM voters v
     INNER JOIN boxes b ON v.box_id = b.box_id
     INNER JOIN sections s ON b.section_id = s.section_id
-    WHERE v.first_name LIKE '%${param}%' OR v.last_name LIKE '%${param}%' OR 
-    v.second_name LIKE '%${param}%';`;
+    WHERE CONCAT(v.first_name,' ',v.last_name,' ',v.second_name) LIKE '%${param}%';`;
     db.votes_app.query(stm).then(voters => {
         res.status(200).send(voters);
     }).catch((err) =>{
