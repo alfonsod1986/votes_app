@@ -81,5 +81,37 @@ controller.getByElectoralKey = (req, res) => {
     });
 };
 
+/**
+ * Obtener un votante por clave electoral
+ * 
+ * @param req
+ * @param res
+ * 
+ * @returns voters
+ */
+controller.search = (req, res) => {
+    var {param} = req.query;
+    param = param == null? '':param;
+
+    Voter.findAll({
+        where: {
+            first_name:{
+                [db.Sequelize.Op.like]: `%${param}%`
+            },
+            [db.Sequelize.or]:[{
+                last_name:{
+                    [db.Sequelize.Op.like]: `%${param}%`
+                },
+                second_name:{
+                    [db.Sequelize.Op.like]: `%${param}%`
+                }
+            }]
+        }
+    }).then(voters => {
+        res.status(200).send(voters);
+    }).catch((err) =>{
+        res.status(500).send(err);
+    });
+}
 /* Export module */
 module.exports = controller;

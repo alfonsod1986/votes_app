@@ -17,6 +17,7 @@ const box_ubication = require('./routes/box_ubication');
 const box = require('./routes/box');
 const occupation = require('./routes/occupation');
 const voter = require('./routes/voter');
+const statistic = require('./routes/statistic');
 
 /* Middlewares */
 app.use(morgan('dev'));
@@ -44,7 +45,7 @@ app.use('/api', box_ubication);
 app.use('/api', box);
 app.use('/api', occupation);
 app.use('/api', voter);
-
+app.use('/api', statistic);
 
 /* Export module */
 module.exports = app;
