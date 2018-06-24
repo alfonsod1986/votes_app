@@ -10,6 +10,22 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true,
             autoIncrement: true
         },
+        first_name:{
+            type: Sequelize.STRING(128),
+            allowNull: true,
+            defaultValue: null,
+            len: [5,128]
+        },
+        last_name:{
+            type: Sequelize.STRING(45),
+            len: [5,128]
+        },
+        second_name:{
+            type: Sequelize.STRING(128),
+            allowNull: true,
+            defaultValue: null,
+            len: [5,128]
+        },
         username:{
             type: Sequelize.STRING(20),
             unique: true,

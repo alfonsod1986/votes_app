@@ -84,6 +84,16 @@ controller.save = (req, res) => {
         user.zone_id = params.zone_id;
         user.role_id = params.role_id;
 
+        if(params.first_name){
+            user.first_name = params.first_name;
+        }
+        if(params.last_name){
+            user.last_name = params.last_name;
+        }
+        if(params.second_name){
+            user.second_name = params.second_name;
+        }
+
         bcrypt.hash(params.password, null, null, (err, hash) => {
             user.password = hash;
 
