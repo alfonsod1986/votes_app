@@ -97,13 +97,13 @@ controller.search = (req, res) => {
         where: {
             [db.Sequelize.Op.or]:[{
                 first_name:{
-                    [db.Sequelize.Op.like]: `%${electoral_key}%`
+                    [db.Sequelize.Op.like]: `%${param}%`
                 },
                 last_name:{
-                    [db.Sequelize.Op.like]: `%${electoral_key}%`
+                    [db.Sequelize.Op.like]: `%${param}%`
                 },
                 second_name:{
-                    [db.Sequelize.Op.like]: `%${electoral_key}%`
+                    [db.Sequelize.Op.like]: `%${param}%`
                 }
             }]
         }
