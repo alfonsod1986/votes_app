@@ -28,6 +28,10 @@ db.votes_app = votes_app;
 /* Models */
 db.roles = require('../models/role')(votes_app, Sequelize);
 db.users = require('../models/user')(votes_app, Sequelize);
+db.zone_bosses = require('../models/zone_boss')(votes_app, Sequelize);
+db.section_bosses = require('../models/section_boss')(votes_app, Sequelize);
+db.territory_bosses = require('../models/territory_boss')(votes_app, Sequelize);
+db.promoters = require('../models/promoter')(votes_app, Sequelize);
 db.federal_districts = require('../models/federal_district')(votes_app, Sequelize);
 db.local_districts = require('../models/local_district')(votes_app, Sequelize);
 db.zones = require('../models/zone')(votes_app, Sequelize);

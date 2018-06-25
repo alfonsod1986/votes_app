@@ -92,5 +92,23 @@ controller.zonesStatistics = (req, res) => {
     });
 };
 
+/**
+ * Obtener estadística de los usuarios
+ * 
+ * @param req
+ * @param res
+ * 
+ * @returns statistics
+ */
+controller.usersStatistics = (req, res) => {
+    var stm = ``;
+
+    db.votes_app.query(stm).then(statistics => {
+        res.status(200).send(statistics);
+    }).catch((err) =>{
+        res.status(500).send(err);
+    });
+};
+
 /* Export module */
 module.exports = controller;

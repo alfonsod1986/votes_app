@@ -35,13 +35,6 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING(70),
             len: [5,20]
         },
-        zone_id:{
-            type: Sequelize.INTEGER.UNSIGNED,
-            references: {
-                model: Zone,
-                key: 'zone_id'
-            }
-        },
         role_id:{
             type: Sequelize.INTEGER.UNSIGNED,
             references: {
