@@ -77,11 +77,10 @@ controller.logIn = (req, res) => {
 controller.save = (req, res) => {
     var params = req.body;
     console.log(params);
-    if(params.username && params.password && params.zone_id && params.role_id){
+    if(params.username && params.password && params.role_id){
         var user = {};
 
         user.username = params.username;
-        user.zone_id = params.zone_id;
         user.role_id = params.role_id;
 
         if(params.first_name){
