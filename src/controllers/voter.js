@@ -114,7 +114,7 @@ controller.search = (req, res) => {
  */
 controller.attended = (req, res) =>{
     const { voter_id } = req.params;
-    const { attended } = req.query;
+    const { attended } = req.body;
 
     Voter.update({ attended: attended }, { where:{ voter_id: voter_id } }).then(() => {
         res.status(200).send({success: true});
