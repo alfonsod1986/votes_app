@@ -82,6 +82,30 @@ controller.getByElectoralKey = (req, res) => {
 };
 
 /**
+ * Obtener un votante por sección
+ * 
+ * @param req
+ * @param res
+ * 
+ * @returns voters
+ */
+
+controller.getBySection = (req, res) => {
+    const {section_id}  = req.body;
+
+    var stm = `SELECT v.* FROM voters v
+    INNER JOIN boxes b ON v.box_id = b.box_id
+    WHERE b.section_id = ${section_id}' 
+    ORDER BY v.voter_id;`;
+    
+    db.votes_app.query(stm).then(voters => {
+        res.status(200).send(voters);
+    }).catch((err) =>{
+        res.status(500).send(err);
+    });
+};
+
+/**
  * Obtener un votante por filtro
  * 
  * @param req
@@ -96,7 +120,8 @@ controller.search = (req, res) => {
     var stm = `SELECT v.* FROM voters v
     INNER JOIN boxes b ON v.box_id = b.box_id
     INNER JOIN sections s ON b.section_id = s.section_id
-    WHERE CONCAT(v.first_name,' ',v.last_name,' ',v.second_name) LIKE '%${param}%';`;
+    WHERE CONCAT(v.first_name,' ',v.last_name,' ',v.second_name) LIKE '%${param}%' 
+    ORDER BY v.voter_id;`;
     db.votes_app.query(stm).then(voters => {
         res.status(200).send(voters);
     }).catch((err) =>{
