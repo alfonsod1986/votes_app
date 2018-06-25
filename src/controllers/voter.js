@@ -95,9 +95,9 @@ controller.getBySection = (req, res) => {
 
     var stm = `SELECT v.* FROM voters v
     INNER JOIN boxes b ON v.box_id = b.box_id
-    WHERE b.section_id = ${section_id}' 
+    WHERE b.section_id = ${section_id} 
     ORDER BY v.voter_id;`;
-    
+
     db.votes_app.query(stm).then(voters => {
         res.status(200).send(voters);
     }).catch((err) =>{
