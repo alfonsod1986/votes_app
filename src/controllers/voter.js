@@ -103,5 +103,24 @@ controller.search = (req, res) => {
         res.status(500).send(err);
     });
 }
+
+/**
+ * Actualizar estado de asistencia
+ * 
+ * @param req
+ * @param res
+ * 
+ * @returns
+ */
+controller.attended = (req, res) =>{
+    const { voter_id } = req.params;
+    const { attended } = req.query;
+
+    Voter.update(attended, { where:{ voter_id: voter_id } }).then(() => {
+        res.status(200).send({success: true});
+    }).catch((err) =>{
+        res.status(500).send(err);
+    });
+};
 /* Export module */
 module.exports = controller;
