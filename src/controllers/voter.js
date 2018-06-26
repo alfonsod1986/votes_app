@@ -40,7 +40,7 @@ controller.show = (req, res) =>{
 };
 
 /**
- * Obtener un votante por internal 9d
+ * Obtener un votante por internal id
  * 
  * @param req
  * @param res
@@ -51,7 +51,7 @@ controller.getByInternalId = (req, res) =>{
     const { internal_id } = req.params;
 
     Voter.findAll({
-        where:{ voter_id: internal_id}
+        where:{ internal_id: internal_id}
     }).then(voter => {
         res.status(200).send(voter);
     }).catch((err) =>{
@@ -123,6 +123,26 @@ controller.getBySection = (req, res) => {
     ORDER BY v.voter_id;`;
 
     db.votes_app.query(stm).then(voters => {
+        res.status(200).send(voters);
+    }).catch((err) =>{
+        res.status(500).send(err);
+    });
+};
+
+/**
+ * Obtener un votante por casilla
+ * 
+ * @param req
+ * @param res
+ * 
+ * @returns voters
+ */
+controller.getByBox = (req, res) => {
+    const { box_id } = req.params;
+
+    Voter.findAll({
+        where:{ box_id: box_id}
+    }).then(voters => {
         res.status(200).send(voters);
     }).catch((err) =>{
         res.status(500).send(err);
