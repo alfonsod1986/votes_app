@@ -41,23 +41,22 @@ controller.logIn = (req, res) => {
         where: { username: username }
     }).then(user => {
         if(user){
-            bcrypt.compare(password, user.password, (err, check) => {
-                if(check){
-                    if(gettoken){
-                        // Devolver token
-                        // Generar token
-                        return res.status(200).send({
-                            token: jwt.createToken(user)
-                        });
-                    }else{
-                        // Devolver datos de usuario
-                        user.password = undefined;
-                        return res.status(200).send({ success: true, user});
-                    }
+            if(username.password == password){
+                if(gettoken){
+                    // Devolver token
+                    // Generar token
+                    return res.status(200).send({
+                        token: jwt.createToken(user)
+                    });
                 }else{
-                    return res.status(404).send({ success: false, message: 'El usuario no se ha podido identificar.'});
+                    // Devolver datos de usuario
+                    user.password = undefined;
+                    return res.status(200).send({ success: true, user});
                 }
-            });
+            }else{
+                return res.status(404).send({ success: false, message: 'El usuario no se ha podido identificar.'});
+            }
+            
         }else{
             return res.status(404).send({ success: false, message: 'El usuario no existe.'});
         }
@@ -81,6 +80,7 @@ controller.save = (req, res) => {
         var user = {};
 
         user.username = params.username;
+        user.password = params.password;
         user.role_id = params.role_id;
 
         if(params.first_name){
@@ -93,13 +93,10 @@ controller.save = (req, res) => {
             user.second_name = params.second_name;
         }
 
-        bcrypt.hash(params.password, null, null, (err, hash) => {
-            user.password = hash;
-
-            User.create(user).then(user => {		
-                res.send(user);
-            });
+        User.create(user).then(user => {		
+            res.send(user);
         });
+        
     }else{
         res.status(200).send({
             message: 'Envía todos los campos requeridos.'

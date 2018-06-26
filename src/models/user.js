@@ -41,7 +41,12 @@ module.exports = (sequelize, Sequelize) => {
                 model: Zone,
                 key: 'role_id'
             }
-        }
+        },
+        zone_id:{
+            type: Sequelize.INTEGER.UNSIGNED,
+            allowNull: true,
+            defaultValue: 0
+        },
     },
     {
         tableName: 'users',
