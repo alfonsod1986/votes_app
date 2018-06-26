@@ -115,14 +115,11 @@ controller.getByZone = (req, res) => {
  */
 
 controller.getBySection = (req, res) => {
-    const {section_id}  = req.body;
+    const data  = req.body;
 
-    var stm = `SELECT v.* FROM voters v
-    INNER JOIN boxes b ON v.box_id = b.box_id
-    WHERE b.section_id = ${section_id} 
-    ORDER BY v.voter_id;`;
+    var stm = `call votes_app.sp_get_voters_by_section(:section_id);`;
 
-    db.votes_app.query(stm).then(voters => {
+    db.votes_app.query(stm, {replacements: data}).then(voters => {
         res.status(200).send(voters);
     }).catch((err) =>{
         res.status(500).send(err);
