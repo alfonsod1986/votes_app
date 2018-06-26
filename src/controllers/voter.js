@@ -82,6 +82,30 @@ controller.getByElectoralKey = (req, res) => {
 };
 
 /**
+ * Obtener un votante por zona
+ * 
+ * @param req
+ * @param res
+ * 
+ * @returns voters
+ */
+controller.getByZone = (req, res) => {
+    const {zone_id}  = req.body;
+
+    var stm = `SELECT v.* FROM voters v
+    INNER JOIN boxes b ON v.box_id = b.box_id
+    INNER JOIN sections s ON b.section_id = s.section_id
+    WHERE s.zone_id = ${zone_id} 
+    ORDER BY v.voter_id;`;
+
+    db.votes_app.query(stm).then(voters => {
+        res.status(200).send(voters);
+    }).catch((err) =>{
+        res.status(500).send(err);
+    });
+};
+
+/**
  * Obtener un votante por sección
  * 
  * @param req
