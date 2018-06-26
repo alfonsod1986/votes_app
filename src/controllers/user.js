@@ -38,24 +38,23 @@ controller.logIn = (req, res) => {
 
     console.log(password)
     User.findOne({
-        where: { username: username }
+        where: { 
+            username: username,
+            password: password }
     }).then(user => {
         if(user){
-            if(username.password == password){
-                if(gettoken){
-                    // Devolver token
-                    // Generar token
-                    return res.status(200).send({
-                        token: jwt.createToken(user)
-                    });
-                }else{
-                    // Devolver datos de usuario
-                    user.password = undefined;
-                    return res.status(200).send({ success: true, user});
-                }
+            if(gettoken){
+                // Devolver token
+                // Generar token
+                return res.status(200).send({
+                    token: jwt.createToken(user)
+                });
             }else{
-                return res.status(404).send({ success: false, message: 'El usuario no se ha podido identificar.'});
+                // Devolver datos de usuario
+                user.password = undefined;
+                return res.status(200).send({ success: true, user});
             }
+            
             
         }else{
             return res.status(404).send({ success: false, message: 'El usuario no existe.'});
