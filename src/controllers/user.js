@@ -103,6 +103,25 @@ controller.save = (req, res) => {
     }
 };
 
+/**
+ * Actualizar usuario
+ * 
+ * @param req
+ * @param res
+ * 
+ * @returns
+ */
+controller.update = (req, res) => {
+    const { user_id } = req.params;
+    const params = req.body;
+
+    User.update(params, { where:{ user_id: user_id } }).then(() => {
+        res.status(200).send({success: true});
+    }).catch((err) =>{
+        res.status(500).send(err);
+    });
+};
+
 controller.test = (req, res) => {
     var params = req.body;
     // Cifrar password y guardar usuario
