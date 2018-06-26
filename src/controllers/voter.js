@@ -138,7 +138,7 @@ controller.getBySection = (req, res) => {
  * @returns voters
  */
 controller.getByBox = (req, res) => {
-    const { box_id } = req.params;
+    const { box_id } = req.body;
 
     Voter.findAll({
         where:{ box_id: box_id}
