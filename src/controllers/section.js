@@ -14,7 +14,13 @@ const controller = {};
  * @returns sections
  */
 controller.all = (req, res) => {
-    Section.findAll().then(sections => {
+    Section.findAll({
+        include: [{
+            model: db.zones,
+            as: 'only_zone',
+            attributes: ['description']
+        }]
+    }).then(sections => {
         res.status(200).send(sections);
     }).catch((err) =>{
         res.status(500).send(err);
