@@ -153,31 +153,15 @@ controller.getByBox = (req, res) => {
 controller.search = (req, res) => {
     var {param} = req.query;
     param = param == null? '':param;
-    /*console.log(param)
+    console.log(param)
+
     var stm = `SELECT v.* FROM voters v
     INNER JOIN boxes b ON v.box_id = b.box_id
     INNER JOIN sections s ON b.section_id = s.section_id
     WHERE CONCAT(v.first_name,' ',v.last_name,' ',v.second_name) LIKE '%${param}%' 
     ORDER BY v.voter_id;`;
-    db.votes_app.query(stm).then(voters => {
-        res.status(200).send(voters);
-    }).catch((err) =>{
-        res.status(500).send(err);
-    });*/
-    Voter.findAll({
-        where:{
-            [db.Sequelize.Op]: [
-                db.Sequelize.where(
-                    db.Sequelize.fn('concant', 
-                        db.Sequelize.col('first_name'), ' ',
-                        db.Sequelize.col('last_name'), ' ',
-                        db.Sequelize.col('second_name')
-                    ),{
-                        like: '%' + param + '%'
-                    })
-            ]
-        }
-    }).then(voters => {
+    
+    db.votes_app.query(stm, { type: db.Sequelize.QueryTypes.SELECT}).then(voters => {
         res.status(200).send(voters);
     }).catch((err) =>{
         res.status(500).send(err);
