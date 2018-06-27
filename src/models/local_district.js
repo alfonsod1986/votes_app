@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, Sequelize) => {
-    const LocalDistrict = sequelize.define('local_district', {
+    const LocalDistrict = sequelize.define('localDistrict', {
         local_district_id:{
             type: Sequelize.INTEGER.UNSIGNED,
             primaryKey: true,

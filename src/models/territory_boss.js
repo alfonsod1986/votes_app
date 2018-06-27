@@ -3,7 +3,7 @@
 const User = require('./user');
 
 module.exports = (sequelize, Sequelize) => {
-    const TerritoryBoss = sequelize.define('territory_boss', {
+    const TerritoryBoss = sequelize.define('territoryBoss', {
         parent:{
             type: Sequelize.INTEGER.UNSIGNED,
             references: {

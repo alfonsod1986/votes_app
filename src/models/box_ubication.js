@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, Sequelize) => {
-    const BoxUbiction = sequelize.define('box_ubication', {
+    const BoxUbiction = sequelize.define('boxUbication', {
         box_ubication_id:{
             type: Sequelize.INTEGER.UNSIGNED,
             primaryKey: true,

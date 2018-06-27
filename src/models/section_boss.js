@@ -3,7 +3,7 @@
 const User = require('./user');
 
 module.exports = (sequelize, Sequelize) => {
-    const SectionBoss = sequelize.define('section_boss', {
+    const SectionBoss = sequelize.define('sectionBoss', {
         parent:{
             type: Sequelize.INTEGER.UNSIGNED,
             references: {

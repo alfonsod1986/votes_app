@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, Sequelize) => {
-    const SectionType = sequelize.define('section_type', {
+    const SectionType = sequelize.define('sectionType', {
         section_type_id:{
             type: Sequelize.INTEGER.UNSIGNED,
             primaryKey: true,
