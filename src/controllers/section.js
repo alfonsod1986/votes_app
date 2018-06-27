@@ -17,7 +17,7 @@ controller.all = (req, res) => {
     Section.findAll({
         include: [{
             model: db.zones,
-            as: 'only_zone',
+            as: 'zone',
             attributes: ['description']
         }]
     }).then(sections => {
@@ -38,7 +38,14 @@ controller.all = (req, res) => {
 controller.show = (req, res) =>{
     const { section_id } = req.params;
 
-    Section.findById(section_id).then(section =>{
+    Section.find({
+        where:{ section_id: section_id},
+        include: [{
+            model: db.zones,
+            as: 'zone',
+            attributes: ['description']
+        }]
+    }).then(section =>{
         res.status(200).send(section);
     }).catch((err) =>{
         res.status(500).send(err);
