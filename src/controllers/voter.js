@@ -155,7 +155,7 @@ controller.search = (req, res) => {
     var search_param = params.search == null? '':params.search;
     
      
-    console.log(param)
+    console.log(params)
 
     var stm = `SELECT v.* FROM voters v
     INNER JOIN boxes b ON v.box_id = b.box_id
