@@ -43,8 +43,6 @@ db.occupations = require('../models/occupation')(votes_app, Sequelize);
 db.voters = require('../models/voter')(votes_app, Sequelize);
 
 /* Relations */
-db.zones.hasMany(db.sections, {as: 'group_sections', foreignKey: 'section_id'});
-db.sections.belongsTo(db.zones, {as: 'only_zone', foreignKey: 'zone_id'});
 
 /* Export module */
 module.exports = db;
