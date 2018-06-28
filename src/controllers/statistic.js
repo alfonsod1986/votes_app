@@ -44,6 +44,7 @@ controller.boxesStatistics = (req, res) => {
             statistics.forEach(inner =>{
                 if(section_id == inner.section_id){
                     boxes.push({
+                        box_id: inner.box_id,
                         description: inner.box_description,
                         total: inner.total,
                         total_assists: inner.total_assists,
@@ -54,6 +55,7 @@ controller.boxesStatistics = (req, res) => {
                 }
             });
             sections.push({
+                section_id: outer.section_id,
                 description: outer.description,
                 boxes: boxes
             });
