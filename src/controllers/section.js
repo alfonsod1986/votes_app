@@ -14,14 +14,12 @@ const controller = {};
  * @returns sections
  */
 controller.all = (req, res) => {
-    Section.findAll({
-        include: [{
-            model: db.zones,
-            as: 'zone',
-            attributes: ['description']
-        }]
-    }).then(sections => {
-        res.status(200).send(sections);
+    var stm = `SELECT s.section_id, s.description, 
+    z.description AS zone_name FROM sections s
+    INNER JOIN zones z ON s.zone_id = z.zone_id;`;
+
+    db.votes_app.query(stm, { type: db.Sequelize.QueryTypes.SELECT}).then(voters => {
+        res.status(200).send(voters);
     }).catch((err) =>{
         res.status(500).send(err);
     });
