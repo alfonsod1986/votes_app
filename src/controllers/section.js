@@ -36,15 +36,13 @@ controller.all = (req, res) => {
 controller.show = (req, res) =>{
     const { section_id } = req.params;
 
-    Section.find({
-        where:{ section_id: section_id},
-        include: [{
-            model: db.zones,
-            as: 'zone',
-            attributes: ['description']
-        }]
-    }).then(section =>{
-        res.status(200).send(section);
+    var stm = `SELECT s.section_id, s.description, 
+    z.description AS zone_name FROM sections s
+    INNER JOIN zones z ON s.zone_id = z.zone_id 
+    WHERE s.section_id = ${section_id};`;
+
+    db.votes_app.query(stm, { type: db.Sequelize.QueryTypes.SELECT}).then(voters => {
+        res.status(200).send(voters);
     }).catch((err) =>{
         res.status(500).send(err);
     });
