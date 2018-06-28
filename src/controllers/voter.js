@@ -19,7 +19,7 @@ controller.all = (req, res) => {
     var user_id = params.user_id;
     var role_id = params.role_id
 
-    stm = `SELECT v.voter_id, v.internal_id, v.first_name, v.last_name, v.second_name,
+    var stm = `SELECT v.voter_id, v.internal_id, v.first_name, v.last_name, v.second_name,
     CONCAT(v.first_name, ' ', v.last_name, ' ', v.second_name) AS fullname,
     v.attended, v.address, v.external_number, v.internal_number,
     v.neigborhood, v.zipcode, s.description AS section_name,
