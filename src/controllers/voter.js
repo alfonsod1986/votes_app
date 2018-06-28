@@ -14,7 +14,70 @@ const controller = {};
  * @returns voters
  */
 controller.all = (req, res) => {
-    Voter.findAll().then(voters => {
+    var params = req.query;
+
+    var user_id = params.user_id;
+    var role_id = params.role_id
+
+    stm = `SELECT v.voter_id, v.internal_id, v.first_name, v.last_name, v.second_name,
+    CONCAT(v.first_name, ' ', v.last_name, ' ', v.second_name) AS fullname,
+    v.attended, v.address, v.external_number, v.internal_number,
+    v.neigborhood, v.zipcode, s.description AS section_name,
+    IF(v.address != '',
+        CONCAT(v.address, ' ', v.external_number, 
+        IF(v.internal_number != '', CONCAT(' ', v.internal_number), ''), ' ', v.neigborhood, ' ', v.zipcode), 'SIN DIRECCION'
+    ) AS fulladdress
+    FROM voters v
+    INNER JOIN boxes b ON v.box_id = b.box_id
+    INNER JOIN sections s ON b.section_id = s.section_id `;
+
+    switch(parseInt(role_id)){
+        /* Estratificación por jefe de zona */
+        case 2:
+            stm += `WHERE s.zone_id = (SELECT zone_id FROM zone_bosses WHERE boss = ${user_id}) `;
+        break;
+        /* Estratificación por jefe sección */
+        case 3:
+            stm += `WHERE s.section_id = (SELECT section_id FROM section_bosses WHERE boss = ${user_id}) `;
+        break;
+        /* Estratificación por jefe territorial */
+        case 4:
+            stm = `SELECT v.voter_id, v.internal_id, v.first_name, v.last_name, v.second_name,
+            CONCAT(v.first_name, ' ', v.last_name, ' ', v.second_name) AS fullname,
+            v.attended, v.address, v.external_number, v.internal_number,
+            v.neigborhood, v.zipcode, s.description AS section_name,
+            IF(v.address != '',
+                CONCAT(v.address, ' ', v.external_number, 
+                IF(v.internal_number != '', CONCAT(' ', v.internal_number), ''), ' ', v.neigborhood, ' ', v.zipcode), 'SIN DIRECCION'
+            ) AS fulladdress
+            FROM user_voter uv
+            INNER JOIN voters v ON uv.voter_id = v.voter_id
+            INNER JOIN boxes b ON v.box_id = b.box_id
+            INNER JOIN sections s ON b.section_id = s.section_id
+            WHERE uv.user_id IN (SELECT boss FROM promoters WHERE parent = ${user_id}) `;
+        break;
+
+        /* Estratificación por promotor */
+        case 5:
+            smt = `SELECT v.voter_id, v.internal_id, v.first_name, v.last_name, v.second_name,
+            CONCAT(v.first_name, ' ', v.last_name, ' ', v.second_name) AS fullname,
+            v.attended, v.address, v.external_number, v.internal_number,
+            v.neigborhood, v.zipcode, s.description AS section_name,
+            IF(v.address != '',
+                CONCAT(v.address, ' ', v.external_number, 
+                IF(v.internal_number != '', CONCAT(' ', v.internal_number), ''), ' ', v.neigborhood, ' ', v.zipcode), 'SIN DIRECCION'
+            ) AS fulladdress
+            FROM user_voter uv
+            INNER JOIN voters v ON uv.voter_id = v.voter_id
+            INNER JOIN boxes b ON v.box_id = b.box_id
+            INNER JOIN sections s ON b.section_id = s.section_id
+            WHERE uv.user_id = ${user_id} `;
+        break;
+    }
+
+    stm += 'ORDER BY v.voter_id;'
+    
+    db.votes_app.query(stm, { type: db.Sequelize.QueryTypes.SELECT}).then(voters => {
         res.status(200).send(voters);
     }).catch((err) =>{
         res.status(500).send(err);
