@@ -31,7 +31,7 @@ controller.sectionsStatistics = (req, res) => {
  * @returns statistics
  */
 controller.boxesStatistics = (req, res) => {
-    var stm = `CALL sp_get_statistics_by_zones();`;
+    var stm = `CALL sp_get_statistics_by_boxes();`;
 
     db.votes_app.query(stm).then(statistics => {
         res.status(200).send(statistics);
