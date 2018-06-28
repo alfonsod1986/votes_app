@@ -43,7 +43,7 @@ controller.all = (req, res) => {
         break;
         /* Estratificación por jefe territorial */
         case 4:
-            var stm = `SELECT v.voter_id, IF(v.electoral_key != '', v.electoral_key, 'SIN CLAVE ELECTORAL') AS electoral_key,
+            stm = `SELECT v.voter_id, IF(v.electoral_key != '', v.electoral_key, 'SIN CLAVE ELECTORAL') AS electoral_key,
             v.internal_id, v.first_name, v.last_name, v.second_name,
             CONCAT(v.first_name, ' ', v.last_name, ' ', v.second_name) AS fullname,
             v.attended, v.address, v.external_number, v.internal_number,
@@ -61,7 +61,7 @@ controller.all = (req, res) => {
 
         /* Estratificación por promotor */
         case 5:
-            var smt = `SELECT v.voter_id, IF(v.electoral_key != '', v.electoral_key, 'SIN CLAVE ELECTORAL') AS electoral_key,
+            stm = `SELECT v.voter_id, IF(v.electoral_key != '', v.electoral_key, 'SIN CLAVE ELECTORAL') AS electoral_key,
             v.internal_id, v.first_name, v.last_name, v.second_name,
             CONCAT(v.first_name, ' ', v.last_name, ' ', v.second_name) AS fullname,
             v.attended, v.address, v.external_number, v.internal_number,
