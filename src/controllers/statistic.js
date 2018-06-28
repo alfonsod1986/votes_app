@@ -93,7 +93,7 @@ controller.zonesStatistics = (req, res) => {
  * @returns statistics
  */
 controller.usersStatistics = (req, res) => {
-    var stm = ``;
+    var stm = `CALL sp_get_statistics_by_promoters();`;
 
     db.votes_app.query(stm).then(statistics => {
         res.status(200).send(statistics);
