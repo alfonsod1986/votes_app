@@ -19,7 +19,8 @@ controller.all = (req, res) => {
     var user_id = params.user_id;
     var role_id = params.role_id
 
-    var stm = `SELECT v.voter_id, v.internal_id, v.first_name, v.last_name, v.second_name,
+    var stm = `SELECT v.voter_id, IF(v.electoral_key != '', v.electoral_key, 'SIN CLAVE ELECTORAL') AS electoral_key, 
+    v.internal_id, v.first_name, v.last_name, v.second_name,
     CONCAT(v.first_name, ' ', v.last_name, ' ', v.second_name) AS fullname,
     v.attended, v.address, v.external_number, v.internal_number,
     v.neigborhood, v.zipcode, s.description AS section_name,
@@ -42,7 +43,8 @@ controller.all = (req, res) => {
         break;
         /* Estratificación por jefe territorial */
         case 4:
-            stm = `SELECT v.voter_id, v.internal_id, v.first_name, v.last_name, v.second_name,
+            stm = `SELECT v.voter_id, IF(v.electoral_key != '', v.electoral_key, 'SIN CLAVE ELECTORAL') AS electoral_key,
+            v.internal_id, v.first_name, v.last_name, v.second_name,
             CONCAT(v.first_name, ' ', v.last_name, ' ', v.second_name) AS fullname,
             v.attended, v.address, v.external_number, v.internal_number,
             v.neigborhood, v.zipcode, s.description AS section_name,
@@ -59,7 +61,8 @@ controller.all = (req, res) => {
 
         /* Estratificación por promotor */
         case 5:
-            smt = `SELECT v.voter_id, v.internal_id, v.first_name, v.last_name, v.second_name,
+            smt = `SELECT v.voter_id, IF(v.electoral_key != '', v.electoral_key, 'SIN CLAVE ELECTORAL') AS electoral_key,
+            v.internal_id, v.first_name, v.last_name, v.second_name,
             CONCAT(v.first_name, ' ', v.last_name, ' ', v.second_name) AS fullname,
             v.attended, v.address, v.external_number, v.internal_number,
             v.neigborhood, v.zipcode, s.description AS section_name,
