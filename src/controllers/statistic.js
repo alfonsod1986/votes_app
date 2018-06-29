@@ -40,8 +40,12 @@ controller.boxesStatistics = (req, res) => {
         statistics.forEach(outer => {
             var boxes = [];
             var description = outer.description;
-            var flag = statistics.includes({description: description})
+            
+            var flag = false;
 
+            sections.forEach(el => {
+                flag = (el.description == description)? true:false
+            });
             if(!flag){
                 statistics.forEach(inner =>{
                     if(description == inner.description){
