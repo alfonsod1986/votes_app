@@ -39,26 +39,29 @@ controller.boxesStatistics = (req, res) => {
 
         statistics.forEach(outer => {
             var boxes = [];
-            var section_id = outer.section_id;
+            var description = outer.description;
+            var flag = statistics.includes({description: description})
 
-            statistics.forEach(inner =>{
-                if(section_id == inner.section_id){
-                    boxes.push({
-                        box_id: inner.box_id,
-                        description: inner.box_description,
-                        total: inner.total,
-                        total_assists: inner.total_assists,
-                        percentage_assists: inner.percentage_assists,
-                        total_absences: inner.total_absences,
-                        percentage_absences: inner.percentage_absences
-                    });
-                }
-            });
-            sections.push({
-                section_id: outer.section_id,
-                description: outer.description,
-                boxes: boxes
-            });
+            if(!flag){
+                statistics.forEach(inner =>{
+                    if(description == inner.description){
+                        boxes.push({
+                            box_id: inner.box_id,
+                            description: inner.box_description,
+                            total: inner.total,
+                            total_assists: inner.total_assists,
+                            percentage_assists: inner.percentage_assists,
+                            total_absences: inner.total_absences,
+                            percentage_absences: inner.percentage_absences
+                        });
+                    }
+                });
+                sections.push({
+                    section_id: outer.section_id,
+                    description: outer.description,
+                    boxes: boxes
+                });
+            }
         });
         res.status(200).send(sections);
     }).catch((err) =>{
