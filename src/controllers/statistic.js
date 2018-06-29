@@ -50,13 +50,13 @@ controller.boxesStatistics = (req, res) => {
                 statistics.forEach(inner =>{
                     if(description == inner.description){
                         boxes.push({
-                            box_id: inner.box_id,
+                            box_id: parseInt(inner.box_id),
                             description: inner.box_description,
-                            total: inner.total,
-                            total_assists: inner.total_assists,
-                            percentage_assists: inner.percentage_assists,
-                            total_absences: inner.total_absences,
-                            percentage_absences: inner.percentage_absences
+                            total: parseInt(inner.total),
+                            total_assists: parseInt(inner.total_assists),
+                            percentage_assists: parseFloat(inner.percentage_assists),
+                            total_absences: parseInt(inner.total_absences),
+                            percentage_absences: parseInt(inner.percentage_absences)
                         });
                     }
                 });
