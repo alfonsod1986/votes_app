@@ -197,11 +197,11 @@ controller.getBySection = (req, res) => {
  * @returns voters
  */
 controller.getByBox = (req, res) => {
-    const { box_id } = req.body;
+    const data  = req.body;
 
-    Voter.findAll({
-        where:{ box_id: box_id}
-    }).then(voters => {
+    var stm = `CALL sp_get_voters_by_box(:box_id);`;
+
+    db.votes_app.query(stm, {replacements: data}).then(voters => {
         res.status(200).send(voters);
     }).catch((err) =>{
         res.status(500).send(err);
