@@ -209,6 +209,26 @@ controller.getByBox = (req, res) => {
 };
 
 /**
+ * Obtener un votante por promotor
+ * 
+ * @param req
+ * @param res
+ * 
+ * @returns voters
+ */
+controller.getByPromoter = (req, res) => {
+    const data  = req.body;
+
+    var stm = `CALL sp_get_voters_by_promoter(:promoter_id);`;
+
+    db.votes_app.query(stm, {replacements: data}).then(voters => {
+        res.status(200).send(voters);
+    }).catch((err) =>{
+        res.status(500).send(err);
+    });
+};
+
+/**
  * Obtener un votante por filtro
  * 
  * @param req

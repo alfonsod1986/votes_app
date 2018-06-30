@@ -11,6 +11,7 @@ router.post('/voters/electoral-key', voter.getByElectoralKey);
 router.post('/voters/zone', voter.getByZone);
 router.post('/voters/section', voter.getBySection);
 router.post('/voters/box', voter.getByBox);
+router.post('/voters/promoter', voter.getByPromoter);
 router.put('/voters/attended/:voter_id', voter.attended);
 
 /* Export module */
