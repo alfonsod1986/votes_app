@@ -16,7 +16,8 @@ const controller = {};
 controller.all = (req, res) => {
     var stm = `SELECT s.section_id, s.description, 
     z.description AS zone_name FROM sections s
-    INNER JOIN zones z ON s.zone_id = z.zone_id;`;
+    INNER JOIN zones z ON s.zone_id = z.zone_id;
+    WHERE s.section <= 20`;
 
     db.votes_app.query(stm, { type: db.Sequelize.QueryTypes.SELECT}).then(voters => {
         res.status(200).send(voters);
