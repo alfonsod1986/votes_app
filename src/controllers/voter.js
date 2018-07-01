@@ -16,8 +16,8 @@ const controller = {};
 controller.all = (req, res) => {
     var params = req.query;
 
-    var user_id = params.user_id;
-    var role_id = params.role_id
+    var user_id = parseInt(params.user_id);
+    var role_id = parseInt(params.role_id);
 
     var stm = `SELECT v.voter_id, IF(v.electoral_key != '', v.electoral_key, 'SIN CLAVE ELECTORAL') AS electoral_key, 
     v.internal_id, v.first_name, v.last_name, v.second_name,
@@ -32,14 +32,33 @@ controller.all = (req, res) => {
     INNER JOIN boxes b ON v.box_id = b.box_id
     INNER JOIN sections s ON b.section_id = s.section_id `;
 
-    switch(parseInt(role_id)){
+    switch(role_id){
         /* Estratificación por jefe de zona */
         case 2:
             stm += `WHERE s.zone_id = (SELECT zone_id FROM zone_bosses WHERE boss = ${user_id}) `;
         break;
         /* Estratificación por jefe sección */
         case 3:
-            stm += `WHERE s.section_id = (SELECT section_id FROM section_bosses WHERE boss = ${user_id}) `;
+            if(user_id == 160 || user_id == 171 || user_id == 182){
+                stm = `SELECT v.voter_id, IF(v.electoral_key != '', v.electoral_key, 'SIN CLAVE ELECTORAL') AS electoral_key,
+                v.internal_id, v.first_name, v.last_name, v.second_name,
+                CONCAT(v.first_name, ' ', v.last_name, ' ', v.second_name) AS fullname,
+                v.attended, v.address, v.external_number, v.internal_number,
+                v.neigborhood, v.zipcode, s.description AS section_name,
+                IF(v.address != '',
+                    CONCAT(v.address, ' ', v.external_number, 
+                    IF(v.internal_number != '', CONCAT(' ', v.internal_number), ''), ' ', v.neigborhood, ' ', v.zipcode), 'SIN DIRECCION'
+                ) AS fulladdress
+                FROM user_voter uv
+                INNER JOIN voters v ON uv.voter_id = v.voter_id
+                INNER JOIN boxes b ON v.box_id = b.box_id
+                INNER JOIN sections s ON b.section_id = s.section_id
+                WHERE uv.user_id IN (SELECT boss FROM promoters WHERE parent IN(
+                    SELECT boss FROM territory_bosses WHERE parent = ${user_id})
+                ) `;
+            }else{
+                stm += `WHERE s.section_id = (SELECT section_id FROM section_bosses WHERE boss = ${user_id}) `;
+            }
         break;
         /* Estratificación por jefe territorial */
         case 4:
