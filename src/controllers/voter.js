@@ -160,11 +160,15 @@ controller.getByElectoralKey = (req, res) => {
  * @returns voters
  */
 controller.getByZone = (req, res) => {
-    const data  = req.body;
+    const { zone_id }  = req.body;
 
-    var stm = `CALL sp_get_voters_by_zone(:zone_id);`;
+    var stm = `SELECT v.* FROM	voters v
+                INNER JOIN boxes b ON v.box_id = b.box_id
+                INNER JOIN sections s ON b.section_id = s.section_id
+                WHERE s.zone_id = ${zone_id}
+                ORDER BY v.voter_id;`;
 
-    db.votes_app.query(stm, {replacements: data}).then(voters => {
+    db.votes_app.query(stm, { type: db.Sequelize.QueryTypes.SELECT}).then(voters => {
         res.status(200).send(voters);
     }).catch((err) =>{
         res.status(500).send(err);
